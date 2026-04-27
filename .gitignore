@@ -1,0 +1,28 @@
+# Data en checkpoints (veel te groot voor GitHub)
+datasets/
+checkpoints/
+*.pt
+*.pth
+
+# Logs en logs
+*.log
+training_history*.json
+temp_monitor.log
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
