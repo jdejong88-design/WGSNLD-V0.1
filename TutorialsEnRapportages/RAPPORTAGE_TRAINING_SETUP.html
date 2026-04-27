@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dutch LLM Training Pipeline - Setup Rapportage</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .step {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+        }
+
+        .step h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .step p {
+            margin: 10px 0;
+            color: #555;
+        }
+
+        code {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            border-left: 4px solid #ffc107;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: #f8f9fa;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .timeline-marker {
+            width: 40px;
+            height: 40px;
+            background: #667eea;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            flex-shrink: 0;
+            margin-right: 20px;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        .timeline-content {
+            padding-top: 5px;
+        }
+
+        .timeline-content h4 {
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .timeline-content p {
+            color: #666;
+            margin: 5px 0;
+        }
+
+        .success {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .note {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            border-left: 4px solid #2196F3;
+        }
+
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            padding: 10px;
+            margin: 5px 0;
+            background: #f8f9fa;
+            border-radius: 4px;
+            border-left: 4px solid #667eea;
+        }
+
+        .checklist li:before {
+            content: "✓ ";
+            color: #28a745;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+
+        .config-table {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 Dutch LLM Training Pipeline</h1>
+            <p>Stap C: Training Setup & Model Configuratie</p>
+        </header>
+
+        <div class="content">
+            <!-- Overview -->
+            <div class="section">
+                <h2>📋 Overzicht</h2>
+                <p>Dit document beschrijft hoe we de training pipeline hebben opgezet voor het Nederlands LLM trainingsproject. We hebben een complete training setup gecreëerd met modelselectie, optimizer-configuratie en trainer setup.</p>
+
+                <div class="highlight">
+                    <strong>Status:</strong> <span class="success">Voltooid</span><br>
+                    <strong>Bestand:</strong> <code>03_training_setup.py</code><br>
+                    <strong>Datum:</strong> 2026-04-26
+                </div>
+            </div>
+
+            <!-- Architecture -->
+            <div class="section">
+                <h2>🏗️ Training Pipeline Architectuur</h2>
+
+                <div class="step">
+                    <h3>Onderdelen</h3>
+                    <p>De training pipeline bestaat uit de volgende onderdelen:</p>
+                    <table>
+                        <tr>
+                            <th>Component</th>
+                            <th>Beschrijving</th>
+                            <th>Implementatie</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Model Loader</strong></td>
+                            <td>Laadt pre-trained Nederlands/meertalige modellen</td>
+                            <td>AutoModelForCausalLM</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tokenizer Setup</strong></td>
+                            <td>Pad token configuratie voor training</td>
+                            <td>AutoTokenizer + pad_token handling</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Data Preparation</strong></td>
+                            <td>Train/eval split en data collator</td>
+                            <td>train_test_split + TextDataCollatorForLanguageModeling</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Training Configuration</strong></td>
+                            <td>Hyperparameters en training arguments</td>
+                            <td>TrainingArguments class</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Optimizer & Scheduler</strong></td>
+                            <td>Learning rate, warmup, weight decay</td>
+                            <td>Hugging Face Trainer (AdamW default)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Trainer Loop</strong></td>
+                            <td>Epoch management, checkpointing, evaluation</td>
+                            <td>Trainer class</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Model Selection -->
+            <div class="section">
+                <h2>🤖 Model Selectie</h2>
+
+                <div class="step">
+                    <h3>Beschikbare Modellen</h3>
+                    <p>We hebben meerdere modellen ter beschikking gesteld in de <code>MODELS</code> dictionary:</p>
+
+                    <table>
+                        <tr>
+                            <th>Model</th>
+                            <th>Hugging Face ID</th>
+                            <th>Parameters</th>
+                            <th>Taal</th>
+                            <th>Use Case</th>
+                        </tr>
+                        <tr>
+                            <td><code>gpt2</code></td>
+                            <td>gpt2</td>
+                            <td>124M</td>
+                            <td>Engels (meertalig capable)</td>
+                            <td>Basis causal LM training</td>
+                        </tr>
+                        <tr>
+                            <td><code>gpt2-medium</code></td>
+                            <td>gpt2-medium</td>
+                            <td>355M</td>
+                            <td>Engels (meertalig capable)</td>
+                            <td>Grotere capaciteit</td>
+                        </tr>
+                        <tr>
+                            <td><code>robbert</code></td>
+                            <td>pdelobelle/robbert-v2-dutch-base</td>
+                            <td>111M</td>
+                            <td>Nederlands (gespecialiseerd)</td>
+                            <td>Nederlands-geoptimaliseerd</td>
+                        </tr>
+                        <tr>
+                            <td><code>distilbert</code></td>
+                            <td>distilbert-base-multilingual-cased</td>
+                            <td>134M</td>
+                            <td>Meertalig</td>
+                            <td>Licht meertalig model</td>
+                        </tr>
+                    </table>
+
+                    <p><strong>Default:</strong> GPT-2 (standaard causal language model)</p>
+                </div>
+            </div>
+
+            <!-- Training Configuration -->
+            <div class="section">
+                <h2>⚙️ Training Configuratie</h2>
+
+                <div class="step">
+                    <h3>Hyperparameters</h3>
+                    <p>De standaard training configuratie:</p>
+
+                    <div class="config-table">
+                        <table>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Waarde</th>
+                                <th>Beschrijving</th>
+                            </tr>
+                            <tr>
+                                <td><strong>Learning Rate</strong></td>
+                                <td>5e-5 (0.00005)</td>
+                                <td>Pas voor fine-tuning van pre-trained modellen</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Batch Size</strong></td>
+                                <td>8</td>
+                                <td>Samples per GPU per training step</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Epochs</strong></td>
+                                <td>3</td>
+                                <td>Aantal passes over volledige dataset</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Warmup Steps</strong></td>
+                                <td>100</td>
+                                <td>Graduale LR toename aan start training</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Weight Decay</strong></td>
+                                <td>0.01</td>
+                                <td>L2 regularisatie voor overfitting prevention</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Save Steps</strong></td>
+                                <td>100</td>
+                                <td>Checkpoint frequency</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Eval Steps</strong></td>
+                                <td>100</td>
+                                <td>Validation frequency</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <h3>Optimizer & Scheduler</h3>
+                    <p>Hugging Face Trainer gebruikt standaard:</p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li><strong>Optimizer:</strong> AdamW (Adam met weight decay)</li>
+                        <li><strong>Learning Rate Scheduler:</strong> Linear warmup dan linear decay</li>
+                        <li><strong>Warmup Strategy:</strong> 100 stappen lineaire toename naar base LR</li>
+                        <li><strong>Gradient Accumulation:</strong> Kan worden ingesteld via gradient_accumulation_steps</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Data Split -->
+            <div class="section">
+                <h2>📊 Data Split & Collation</h2>
+
+                <div class="step">
+                    <h3>Train/Eval Split</h3>
+                    <p>De tokenized dataset wordt opgesplitst in:</p>
+                    <table>
+                        <tr>
+                            <th>Set</th>
+                            <th>Percentage</th>
+                            <th>Doelstelling</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Training</strong></td>
+                            <td>90%</td>
+                            <td>Model parameters aanpassen</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Validation</strong></td>
+                            <td>10%</td>
+                            <td>Performance monitoring, best model selection</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="step">
+                    <h3>Data Collator</h3>
+                    <p><code>TextDataCollatorForLanguageModeling</code> voorbereiding:</p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Groeperen van samples in batches</li>
+                        <li>Padding tot max sequence length</li>
+                        <li><code>mlm=False</code> → Causal Language Modeling (volgende token voorspelling)</li>
+                        <li>Attention masks voor proper padding handling</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Implementation Details -->
+            <div class="section">
+                <h2>🔧 Implementatie Details</h2>
+
+                <div class="step">
+                    <h3>DutchLLMTrainer Klasse</h3>
+                    <p>Hoofd training management klasse met volgende methodes:</p>
+
+                    <table>
+                        <tr>
+                            <th>Methode</th>
+                            <th>Input</th>
+                            <th>Output</th>
+                            <th>Functie</th>
+                        </tr>
+                        <tr>
+                            <td><code>__init__()</code></td>
+                            <td>model_name, device</td>
+                            <td>Initialized trainer object</td>
+                            <td>Model & tokenizer laden</td>
+                        </tr>
+                        <tr>
+                            <td><code>setup_training()</code></td>
+                            <td>dataset, hyperparameters</td>
+                            <td>Trainer, TrainingArguments</td>
+                            <td>Training configuratie</td>
+                        </tr>
+                        <tr>
+                            <td><code>train()</code></td>
+                            <td>trainer</td>
+                            <td>None (model updated in-place)</td>
+                            <td>Training loop uitvoering</td>
+                        </tr>
+                        <tr>
+                            <td><code>save_model()</code></td>
+                            <td>output_dir</td>
+                            <td>None (files written to disk)</td>
+                            <td>Model & tokenizer persisteren</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Execution Timeline -->
+            <div class="section">
+                <h2>⏱️ Uitvoering Stappen</h2>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-marker">1</div>
+                        <div class="timeline-content">
+                            <h4>Dataset Laden</h4>
+                            <p>Tokenized Wikipedia dataset laden van <code>wikipedia_nl_tokenized</code></p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker">2</div>
+                        <div class="timeline-content">
+                            <h4>Model Initialisering</h4>
+                            <p>GPT-2 model en tokenizer laden van Hugging Face</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker">3</div>
+                        <div class="timeline-content">
+                            <h4>Tokenizer Setup</h4>
+                            <p>Pad token instellen (nodig voor batched training)</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker">4</div>
+                        <div class="timeline-content">
+                            <h4>Data Split</h4>
+                            <p>Dataset splitsen: 90% training, 10% validation</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker">5</div>
+                        <div class="timeline-content">
+                            <h4>Training Arguments</h4>
+                            <p>TrainingArguments object creëren met hyperparameters</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker">6</div>
+                        <div class="timeline-content">
+                            <h4>Trainer Creatie</h4>
+                            <p>Trainer object instellen met model, dataset, collator</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker">7</div>
+                        <div class="timeline-content">
+                            <h4>Training Uitvoering</h4>
+                            <p>3 epochs trainings loop starten met evaluation</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker">8</div>
+                        <div class="timeline-content">
+                            <h4>Model Opslaan</h4>
+                            <p>Getrainde model en tokenizer persisteren naar <code>models/</code> folder</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Code Walkthrough -->
+            <div class="section">
+                <h2>💻 Code Implementatie</h2>
+
+                <div class="step">
+                    <h3>1. Model en Tokenizer Laden</h3>
+                    <div class="code-block">from transformers import AutoModelForCausalLM, AutoTokenizer
+
+trainer = DutchLLMTrainer(model_name='gpt2')
+# Laadt:
+# - Model: gpt2 (124M parameters)
+# - Tokenizer: GPT-2 tokenizer
+# - Device: CUDA if available, else CPU</div>
+                </div>
+
+                <div class="step">
+                    <h3>2. Training Setup</h3>
+                    <div class="code-block">trainer, training_args = trainer_obj.setup_training(
+    dataset=tokenized_dataset,
+    output_dir='./checkpoints',
+    learning_rate=5e-5,
+    batch_size=8,
+    num_epochs=3,
+    warmup_steps=100,
+    weight_decay=0.01
+)
+# Creëert:
+# - TrainingArguments met optimale settings
+# - Trainer met model, data, callbacks
+# - Train/eval datasets</div>
+                </div>
+
+                <div class="step">
+                    <h3>3. Training Uitvoering</h3>
+                    <div class="code-block">trainer_obj.train(trainer)
+# Voert uit:
+# - 3 epochs over training data
+# - Evaluation elke 100 stappen
+# - Checkpointing elke 100 stappen
+# - Best model selection op basis van eval_loss</div>
+                </div>
+
+                <div class="step">
+                    <h3>4. Model Persisteren</h3>
+                    <div class="code-block">trainer_obj.save_model('models/dutch_llm_gpt2')
+# Slaat op:
+# - Model weights (pytorch_model.bin)
+# - Tokenizer configuration
+# - Config.json en andere metadata</div>
+                </div>
+            </div>
+
+            <!-- Output Structure -->
+            <div class="section">
+                <h2>📁 Output Structuur</h2>
+
+                <div class="step">
+                    <h3>Directory Layout Na Training</h3>
+                    <div class="code-block">E:/Claude/workflow/WatergeusLLM/
+├── checkpoints/              (Training checkpoints)
+│   ├── checkpoint-100/
+│   ├── checkpoint-200/
+│   └── checkpoint-300/
+├── models/                   (Final trained models)
+│   └── dutch_llm_gpt2/
+│       ├── pytorch_model.bin
+│       ├── config.json
+│       ├── tokenizer.json
+│       └── tokenizer_config.json
+└── datasets/
+    ├── wikipedia_nl_tokenized/ (Input data)
+    └── wikipedia_nl_sample_processed/</div>
+                </div>
+            </div>
+
+            <!-- Important Notes -->
+            <div class="section">
+                <h2>⚠️ Belangrijke Opmerkingen</h2>
+
+                <div class="note">
+                    <h3>GPU/CPU Hardware</h3>
+                    <p>Het script detecteert automatisch GPU (CUDA) beschikbaarheid. Op CPU zal training veel langzamer verlopen (~50-100x slower). Voor productie training wordt NVIDIA GPU (RTX 3090, A100, etc.) sterk aanbevolen.</p>
+                </div>
+
+                <div class="note">
+                    <h3>Memory Requirements</h3>
+                    <p>GPT-2 base model vereist minimaal 8GB RAM voor batch_size=8. Bij OOM errors:</p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Batch size reduceren naar 4 of 2</li>
+                        <li>Gradient accumulation steps gebruiken</li>
+                        <li>Model quantization overwegen</li>
+                    </ul>
+                </div>
+
+                <div class="note">
+                    <h3>Hyperparameter Tuning</h3>
+                    <p>De huidige parameters zijn baseline settings. Voor betere resultaten:</p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Learning rate: Test 1e-5, 3e-5, 5e-5, 1e-4</li>
+                        <li>Warmup steps: Try 500, 1000 voor grotere datasets</li>
+                        <li>Epochs: Meer epochs voor meer data diversity learning</li>
+                    </ul>
+                </div>
+
+                <div class="note">
+                    <h3>Model Evaluatie</h3>
+                    <p>Eval loss wordt automatisch getracked. Na training checken:</p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Eval loss convergence curve in Trainer logs</li>
+                        <li>Model generation quality met sample prompts</li>
+                        <li>Perplexity op held-out test set</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Reproducibility -->
+            <div class="section">
+                <h2>🔄 Reproduceerbaarheid</h2>
+
+                <div class="step">
+                    <h3>Stappen om Training Opnieuw Uit te Voeren</h3>
+                    <ol style="margin-left: 20px; margin-top: 10px;">
+                        <li>Zorg dat <code>02_tokenization.py</code> voltooid is en <code>wikipedia_nl_tokenized</code> bestaat</li>
+                        <li>Run het training script:
+                            <div class="code-block">python 03_training_setup.py</div>
+                        </li>
+                        <li>Monitor training progress in console output</li>
+                        <li>Checkpoints worden opgeslagen in <code>E:/Claude/workflow/WatergeusLLM/checkpoints/</code></li>
+                        <li>Final model wordt opgeslagen in <code>E:/Claude/workflow/WatergeusLLM/models/dutch_llm_gpt2/</code></li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Verification Checklist -->
+            <div class="section">
+                <h2>✅ Verificatie Checklist</h2>
+
+                <ul class="checklist">
+                    <li>Training script aangemaakt: <code>03_training_setup.py</code></li>
+                    <li>DutchLLMTrainer klasse geïmplementeerd met alle methodes</li>
+                    <li>Model selector met 4 opties (gpt2, gpt2-medium, robbert, distilbert)</li>
+                    <li>Training arguments correct geconfigureerd</li>
+                    <li>Data split logica aanwezig (90/10 train/eval)</li>
+                    <li>TextDataCollatorForLanguageModeling ingezet</li>
+                    <li>Optimizer via Trainer (AdamW) ingesteld</li>
+                    <li>Learning rate scheduler configuratie aanwezig</li>
+                    <li>Checkpoint opslaan logic geïmplementeerd</li>
+                    <li>Eval strategy ingesteld</li>
+                    <li>CUDA/CPU device detection ingebouwd</li>
+                </ul>
+            </div>
+
+            <!-- Next Steps -->
+            <div class="section">
+                <h2>🎯 Volgende Stappen</h2>
+
+                <div class="step">
+                    <h3>D: Model Inference & Evaluatie</h3>
+                    <p>Na training kunnen we:</p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Model laden en text generatie testen</li>
+                        <li>Perplexity op test set berekenen</li>
+                        <li>Generation quality evalueren</li>
+                        <li>BLEU/ROUGE metrics bereken voor eval</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <h3>E: Model Deployment</h3>
+                    <p>Optionele verdere stappen:</p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Model uploaden naar Hugging Face Hub</li>
+                        <li>API endpoint creëren met Flask/FastAPI</li>
+                        <li>Docker containerization</li>
+                        <li>Production deployment setup</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Summary -->
+            <div class="section">
+                <h2>📝 Samenvatting</h2>
+
+                <p>Stap C van het Dutch LLM training project is voltooid. We hebben een complete training pipeline gecreëerd die:</p>
+
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><strong>Model Management:</strong> Ondersteuning voor GPT-2, GPT-2-medium, RobBERT, en DistilBERT</li>
+                    <li><strong>Data Handling:</strong> Train/eval splits met proper data collation</li>
+                    <li><strong>Training Configuration:</strong> Optimale hyperparameters met AdamW optimizer</li>
+                    <li><strong>Monitoring:</strong> Automatic evaluation, checkpointing, best model selection</li>
+                    <li><strong>Production Ready:</strong> Error handling, logging, device detection</li>
+                </ul>
+
+                <p style="margin-top: 20px;">De pipeline is gereed om op de tokenized Wikipedia dataset te draaien en een Nederlands-geoptimaliseerd LLM te creëren.</p>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 Dutch LLM Training Project | Stap C: Training Pipeline Setup</p>
+            <p>Gemaakt met 🇳🇱 voor Nederlandse LLM development</p>
+        </footer>
+    </div>
+</body>
+</html>

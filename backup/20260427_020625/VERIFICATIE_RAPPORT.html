@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificatie Rapport - Stap 2 Correcties</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        h2 {
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: #764ba2;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .check-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .check-table th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .check-table td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .check-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .status-ok {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 10px;
+            border-radius: 3px;
+            color: #155724;
+            font-weight: bold;
+        }
+
+        .status-warning {
+            background: #fff3cd;
+            border-left: 5px solid #ff9800;
+            padding: 10px;
+            border-radius: 3px;
+            color: #856404;
+            font-weight: bold;
+        }
+
+        .status-error {
+            background: #f8d7da;
+            border-left: 5px solid #dc3545;
+            padding: 10px;
+            border-radius: 3px;
+            color: #721c24;
+            font-weight: bold;
+        }
+
+        .section-box {
+            background: #f8f9fa;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border-left: 5px solid #0066cc;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 3px;
+        }
+
+        .success-box {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 3px;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #d63384;
+            font-family: 'Courier New', monospace;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        .score-card {
+            background: #f0f7ff;
+            border: 2px solid #667eea;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .score-number {
+            font-size: 3em;
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .score-label {
+            color: #764ba2;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            margin: 8px 0;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .checklist-icon {
+            font-size: 1.5em;
+            margin-right: 15px;
+            width: 30px;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>✓ Verificatie Rapport</h1>
+            <p>Stap 2: BPE Tokenizer - Kwaliteitscontrole</p>
+        </header>
+
+        <div class="content">
+
+            <!-- SAMENVATTING -->
+            <h2>📊 Samenvatting van de Verificatie</h2>
+
+            <div class="score-card">
+                <div class="score-number">18/18</div>
+                <div class="score-label">Controles Geslaagd</div>
+            </div>
+
+            <div class="success-box">
+                <strong>Status: ALLE CORRECTIES GEVERIFIEERD ✓</strong><br>
+                Zowel de Python-code als het HTML-rapport zijn volledig gecorrigeerd en voldoen aan alle technische en taalkundige vereisten.
+                Aanvulling: GPT-2 compatibiliteitsbest bestanden (vocab.json, merges.txt) worden nu ook gegenereerd.
+            </div>
+
+            <!-- PYTHON CODE CHECKLIST -->
+            <h2>🐍 Python Code: 02_train_bpe_tokenizer.py</h2>
+
+            <table class="check-table">
+                <thead>
+                    <tr>
+                        <th>Controle-item</th>
+                        <th>Bevinding</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>1. Byte-Level BPE Configuratie</strong></td>
+                        <td><span class="status-ok">✓ CORRECT</span></td>
+                        <td>
+                            <code>pre_tokenizers.ByteLevel(add_prefix_space=True)</code> gebruikt.<br>
+                            Dit genereert correct Ġ-prefixed tokens (GPT-2 stijl), niet ##-prefixed (WordPiece).
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>2. Post-processor Configuratie</strong></td>
+                        <td><span class="status-ok">✓ CORRECT</span></td>
+                        <td>
+                            <code>processors.ByteLevel(trim_offsets=True)</code> juist ingesteld.<br>
+                            Dit zorgt dat byte-offsets correct worden berekend.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>3. Special Tokens</strong></td>
+                        <td><span class="status-ok">✓ CORRECT</span></td>
+                        <td>
+                            Juist: <code>['&lt;|endoftext|&gt;', '[PAD]', '[UNK]']</code><br>
+                            Geen overbodige tokens, focus op essentiële controle-tokens.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>4. Verwijderd: WordPiece Prefix</strong></td>
+                        <td><span class="status-ok">✓ CORRECT</span></td>
+                        <td>
+                            <code>continuing_subword_prefix='##'</code> is correct verwijderd.<br>
+                            Dit was een WordPiece-artifact en hoort niet in BPE.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>5. Trainer Configuratie</strong></td>
+                        <td><span class="status-ok">✓ CORRECT</span></td>
+                        <td>
+                            <code>trainers.BpeTrainer()</code> correct geconfigureerd met:<br>
+                            • vocab_size=16000<br>
+                            • min_frequency=2<br>
+                            • special_tokens correct
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>6. Taal: Docstrings & Opmerkingen</strong></td>
+                        <td><span class="status-ok">✓ NEDERLANDS</span></td>
+                        <td>
+                            Alle docstrings en opmerkingen zijn in correct Nederlands.<br>
+                            Geen Engelse taalfouten gevonden.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>7. Foutafhandeling</strong></td>
+                        <td><span class="status-ok">✓ ADEQUAAT</span></td>
+                        <td>
+                            Controleert of dataset bestaat (regel 91).<br>
+                            Geeft duidelijke foutmeldingen bij problemen.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>8. Output & Logging</strong></td>
+                        <td><span class="status-ok">✓ CORRECT</span></td>
+                        <td>
+                            Gebruikt ASCII-symbolen ([OK]) in plaats van Unicode.<br>
+                            Dit werkt op Windows zonder encoding-fouten.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- HTML RAPPORT CHECKLIST -->
+            <h2>📄 HTML Rapport: Stap2_BPE_Tokenizer_Rapport.html</h2>
+
+            <table class="check-table">
+                <thead>
+                    <tr>
+                        <th>Controle-item</th>
+                        <th>Bevinding</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>1. Taalfouten: "Het AI"</strong></td>
+                        <td><span class="status-ok">✓ GECORRIGEERD</span></td>
+                        <td>
+                            Veranderd naar: "De AI leert"<br>
+                            AI is vrouwelijk/mannelijk (de intelligentie).
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>2. Taalfouten: "much beter"</strong></td>
+                        <td><span class="status-ok">✓ GECORRIGEERD</span></td>
+                        <td>
+                            Veranderd naar: "veel beter"<br>
+                            "much" is Engels; correct Nederlands is "veel".
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>3. Taalfouten: "Loaded", "Trainede"</strong></td>
+                        <td><span class="status-ok">✓ GECORRIGEERD</span></td>
+                        <td>
+                            "Loaded" → "geladen"<br>
+                            "Trainede" → "getraind"<br>
+                            Alle werkwoordsvormen nu correct Nederlands.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>4. Vocabulaire vs Vocabulary</strong></td>
+                        <td><span class="status-ok">✓ CONSISTENT</span></td>
+                        <td>
+                            Overal "vocabulaire" gebruikt (Nederlands).<br>
+                            Geen "vocabulary" meer (Engels).
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>5. Tokenizer Test Output: Byte-Level BPE</strong></td>
+                        <td><span class="status-ok">✓ CORRECT</span></td>
+                        <td>
+                            Tokens toont Ġ-prefixes, GEEN ##-prefixes:<br>
+                            ['Dit', 'Ġis', 'Ġeen', ...] ✓<br>
+                            (WordPiece zou zijn: ['Dit', 'is', '##een'])
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>6. Emoji Test Case</strong></td>
+                        <td><span class="status-ok">✓ TOEGEVOEGD</span></td>
+                        <td>
+                            "Dit is cool 😎" toont dat Byte-Level BPE emoji's kan verwerken.<br>
+                            Demonstreert voordeel boven WordPiece.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>7. Parameterberekening: 400M → 35M</strong></td>
+                        <td><span class="status-ok">✓ GECORRIGEERD</span></td>
+                        <td>
+                            Oorspronkelijk: "400+ miljoen parameters"<br>
+                            Gecorrigeerd naar: "~35 miljoen parameters (Custom Nano-GPT)"<br>
+                            Met uitleg: 8 lagen × 512 hidden = ~35M params.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>8. Special Tokens Sectie</strong></td>
+                        <td><span class="status-ok">✓ TOEGEVOEGD</span></td>
+                        <td>
+                            Nieuwe sectie legt uit:<br>
+                            • &lt;|endoftext|&gt; (einde document)<br>
+                            • [PAD] (padding)<br>
+                            • [UNK] (unknown token)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>9. Waarschuwingsbox: Drie Fouten</strong></td>
+                        <td><span class="status-ok">✓ GEDETAILLEERD</span></td>
+                        <td>
+                            Fout 1: Fine-tuning vs From-Scratch ✓<br>
+                            Fout 2: WordPiece vs Byte-Level BPE ✓<br>
+                            Fout 3: Parameterberekening ✓
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>10. Byte-Level BPE Toelichting</strong></td>
+                        <td><span class="status-ok">✓ JUIST</span></td>
+                        <td>
+                            Legt Ġ-prefixes uit (spatie-markering).<br>
+                            Vergelijkt met WordPiece (##-prefix).<br>
+                            Verklaart emoji-verwerking.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- TECHNISCHE VERIFICATIE -->
+            <h2>🔬 Technische Verificatie</h2>
+
+            <div class="section-box">
+                <h3>Byte-Level BPE vs WordPiece: Verschilanalyse</h3>
+                <table class="check-table" style="margin-top: 15px;">
+                    <thead>
+                        <tr>
+                            <th>Aspect</th>
+                            <th>Byte-Level BPE (Ons)</th>
+                            <th>WordPiece (BERT/RobBERT)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Subword-prefix</strong></td>
+                            <td>Ġ (spatie-marker)</td>
+                            <td>## (woord-voortzetting)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Byte-niveau</strong></td>
+                            <td>Ja — kan alles verwerken</td>
+                            <td>Nee — gebruikt [UNK] voor onbekende bytes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Emoji-support</strong></td>
+                            <td>Ja — native support</td>
+                            <td>Nee — wordt [UNK]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Gebruikt door</strong></td>
+                            <td>GPT-2, GPT-3, GPT-4</td>
+                            <td>BERT, RobBERT, ELECTRA</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Onze config</strong></td>
+                            <td><span class="status-ok">✓ CORRECT</span></td>
+                            <td>N/A</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="info-box">
+                <h3>Parameterberekening: Verificatie</h3>
+                <p><strong>Gegeven configuratie:</strong></p>
+                <ul>
+                    <li>8 lagen (layers)</li>
+                    <li>512 hidden size</li>
+                    <li>8 attention heads</li>
+                    <li>16.000 vocabulaire tokens</li>
+                </ul>
+                <p style="margin-top: 15px;"><strong>Berekening:</strong></p>
+                <ul>
+                    <li>Per laag: 12 × (512 × 512) ≈ 3,1 miljoen parameters</li>
+                    <li>8 lagen: 8 × 3,1 = ~24,8 miljoen parameters</li>
+                    <li>Embeddings: 16.000 × 512 = ~8,2 miljoen parameters</li>
+                    <li><strong>Totaal: ~33-35 miljoen parameters</strong></li>
+                </ul>
+                <p style="margin-top: 15px;">
+                    <span class="status-ok">✓ CORRECT</span>
+                    Niet 400 miljoen. De 35M is perfect gebalanceerd voor 600 MB data.
+                </p>
+            </div>
+
+            <!-- TAALKUNDIGE VERIFICATIE -->
+            <h2>🇳🇱 Taalkundige Verificatie</h2>
+
+            <div class="section-box">
+                <h3>Nederlands Taalgebruik</h3>
+                <div style="margin-top: 15px;">
+                    <div class="checklist-item">
+                        <div class="checklist-icon">✓</div>
+                        <div>Consistent lidwoordgebruik: "De AI" (niet "Het AI")</div>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checklist-icon">✓</div>
+                        <div>Geen Engelse woorden buiten code context</div>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checklist-icon">✓</div>
+                        <div>Werkwoorden correct geconjugeerd: "geladen", "getraind"</div>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checklist-icon">✓</div>
+                        <div>Terminologie consequent: "vocabulaire" (niet "vocabulary")</div>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checklist-icon">✓</div>
+                        <div>Zinsstructuur grammaticaal correct</div>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checklist-icon">✓</div>
+                        <div>Geen spellingsfouten gevonden</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VERDERE BEVINDINGEN -->
+            <h2>📋 Verdere Bevindingen & Notities</h2>
+
+            <div class="success-box">
+                <h3>Sterke Punten:</h3>
+                <ul>
+                    <li><strong>Technische nauwkeurigheid:</strong> Byte-Level BPE is correct geïmplementeerd met de juiste pre-tokenizer en post-processor configuratie.</li>
+                    <li><strong>Transparantie:</strong> Het rapport geeft openlijk toe welke fouten zijn gemaakt en hoe ze zijn opgelost.</li>
+                    <li><strong>Educatieve waarde:</strong> De uitleg is begrijpelijk voor 12-jarigen zonder technische achtergrond.</li>
+                    <li><strong>Volledigheid:</strong> Alle aspecten (code, configuratie, tokenisatie, parameters) zijn gedekt.</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h3>Kleine Opmerkingen:</h3>
+                <ul>
+                    <li><strong>Regel 123 (Python):</strong> <code>logger.info("[OK] Tokenizer training complete!")</code> — GECORRIGEERD. Geen Unicode meer.</li>
+                    <li><strong>Regel 150 (Python):</strong> <code>print(f"\nVocab size: {len(tokenizer.get_vocab()):,}")</code> — Dit is Engels, maar het is output van de tokenizer zelf. Acceptabel.</li>
+                    <li><strong>GPT-2 Compatibiliteit:</strong> TOEGEVOEGD. Script slaat nu ook vocab.json en merges.txt op voor directe compatibiliteit met GPT-2 architectuur.</li>
+                </ul>
+            </div>
+
+            <!-- AANBEVELINGEN -->
+            <h2>✨ Aanbevelingen voor Stap 3</h2>
+
+            <div class="section-box">
+                <h3>Gereed voor volgende stap:</h3>
+                <ol>
+                    <li><strong>Stap 3 gaat verder:</strong> Nu bouwen we de Transformer-architectuur (03_build_transformer_model.py)</li>
+                    <li><strong>Tokenizer hergebruiken:</strong> De <code>dutch_tokenizer.json</code> wordt in Stap 3 geladen in het model</li>
+                    <li><strong>Modelparameters bevestigd:</strong> 35 miljoen parameters, optimaal voor onze dataset</li>
+                    <li><strong>Taalgebruik:</strong> Blijf Nederlands consequent hanteren (geen Engelse termen buiten code)</li>
+                </ol>
+            </div>
+
+        </div>
+
+        <footer>
+            <p><strong>Verificatie Rapport - WatergeusLLM</strong></p>
+            <p>Datum: 27 April 2026 | Status: GEVERIFIEERD ✓</p>
+            <p>Alle 18 controles geslaagd. Klaar voor Stap 3.</p>
+        </footer>
+    </div>
+</body>
+</html>

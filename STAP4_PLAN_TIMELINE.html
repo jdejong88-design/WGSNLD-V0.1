@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stap 4+ Plan en Timeline - WatergeusLLM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        h2 {
+            color: #1a237e;
+            border-bottom: 4px solid #2196F3;
+            padding-bottom: 15px;
+            margin-top: 40px;
+            margin-bottom: 25px;
+            font-size: 1.8em;
+        }
+
+        h3 {
+            color: #0d47a1;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            border-left: 5px solid #1a237e;
+            padding-left: 15px;
+        }
+
+        .phase-box {
+            background: #e3f2fd;
+            border-left: 5px solid #1a237e;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .task-box {
+            background: #f5f5f5;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            margin: 30px 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .timeline-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 50px;
+            width: 2px;
+            height: 30px;
+            background: #2196F3;
+        }
+
+        .timeline-dot {
+            width: 40px;
+            height: 40px;
+            background: #1a237e;
+            border: 3px solid #2196F3;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            flex-shrink: 0;
+            margin-right: 20px;
+            margin-top: 5px;
+        }
+
+        .timeline-content {
+            flex: 1;
+            background: white;
+            border: 2px solid #e3f2fd;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .timeline-content h4 {
+            color: #1a237e;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .timeline-content p {
+            color: #555;
+            font-size: 0.95em;
+            margin-bottom: 8px;
+        }
+
+        .time-estimate {
+            display: inline-block;
+            background: #fff3e0;
+            color: #e65100;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .critical {
+            background: #ffebee;
+            border-left: 5px solid #c62828;
+        }
+
+        .important {
+            background: #fff3e0;
+            border-left: 5px solid #ff9800;
+        }
+
+        .detail-list {
+            background: #fafafa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-size: 0.95em;
+        }
+
+        .detail-list li {
+            margin-left: 20px;
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 3px 8px;
+            border-radius: 3px;
+            color: #d63384;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+        }
+
+        th {
+            background: #1a237e;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .summary-box {
+            background: #e8f5e9;
+            border-left: 5px solid #4caf50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        footer {
+            background: #f8f9fa;
+            padding: 30px 20px;
+            text-align: center;
+            color: #666;
+            border-top: 3px solid #1a237e;
+        }
+
+        .total-time {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #1a237e;
+            text-align: center;
+            padding: 20px;
+            background: #e3f2fd;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .checkmark {
+            color: #4caf50;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .warning {
+            color: #ff9800;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Stap 4+ Plan & Timeline</h1>
+            <p>Gedetailleerde roadmap voor Model Training & Beyond</p>
+            <p style="font-size: 0.9em; margin-top: 15px;">27 April 2026 | Start: 02:30 uur (geschat)</p>
+        </header>
+
+        <div class="content">
+
+            <h2>🎯 Missie: Van Model naar Trained & Deployable</h2>
+
+            <p>
+                We hebben Stap 1-3 afgerond met 3 kritieke verbeteringen toegepast. Nu beginnen we met Stap 4: Model Training op 50k Nederlandse Wikipedia artikelen.
+            </p>
+
+            <div class="summary-box">
+                <h3>Status Checkpoint</h3>
+                <ul>
+                    <li><span class="checkmark">✅</span> Dataset: 50.000 artikelen gedownload & verwerkt (600MB tekst)</li>
+                    <li><span class="checkmark">✅</span> Tokenizer: BPE, 16k vocab, alle artikelen tokenized</li>
+                    <li><span class="checkmark">✅</span> Model: Nano-GPT met Weight Tying, 33.6M parameters</li>
+                    <li><span class="checkmark">✅</span> Verbetering 1: Shape validatie (ValueError) in forward()</li>
+                    <li><span class="checkmark">✅</span> Verbetering 2: Gradient norm logging elke 100 batches</li>
+                    <li><span class="checkmark">✅</span> Verbetering 3: Rapportage cleanup (3 redundante bestanden weg)</li>
+                </ul>
+            </div>
+
+            <!-- FASE 1: IMMEDIATE PREPARATION -->
+            <h2>📍 FASE 1: Voorbereiding (0-15 minuten)</h2>
+
+            <div class="phase-box">
+                <p>Voor we trainen: controleer hardware, data, en besparingen.</p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot">1</div>
+                    <div class="timeline-content">
+                        <h4>Systeemcheck & GPU Validatie</h4>
+                        <p><strong>Wat:</strong> Verifieer beschikbare RAM, vrij schijfruimte, en CUDA beschikbaarheid</p>
+                        <ul class="detail-list">
+                            <li>Check: <code>torch.cuda.is_available()</code></li>
+                            <li>Check: 39.6 GB RAM beschikbaar?</li>
+                            <li>Check: E: drive heeft 858 GB vrij (voldoende voor checkpoints)</li>
+                            <li>Check: <code>03_build_transformer_model.py</code> en <code>04_train_model.py</code> bewerkt</li>
+                        </ul>
+                        <p><span class="time-estimate">5 min</span></p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot">2</div>
+                    <div class="timeline-content">
+                        <h4>Data Validatie</h4>
+                        <p><strong>Wat:</strong> Controleer of tokenized data aanwezig en geldig is</p>
+                        <ul class="detail-list">
+                            <li>Controleer: <code>datasets/wikipedia_nl_tokenized/</code> bevat <code>tokens_*.pt</code> bestanden</li>
+                            <li>Controleer: Aantal bestanden ≈ 50.000 / 100 = ~500 bestanden (afhankelijk van batch size)</li>
+                            <li>Test: Load één batch in Python om shapes te verifiëren</li>
+                        </ul>
+                        <p><span class="time-estimate">5 min</span></p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot">3</div>
+                    <div class="timeline-dot">3</div>
+                    <div class="timeline-content">
+                        <h4>Config Review</h4>
+                        <p><strong>Wat:</strong> Verificeer training parameters</p>
+                        <ul class="detail-list">
+                            <li>Learning rate: 0.001</li>
+                            <li>Batch size: 32</li>
+                            <li>Num epochs: 3 (eerste run)</li>
+                            <li>Seq length: 512</li>
+                            <li>Gradient clip: 1.0</li>
+                            <li>Early stopping: patience=2</li>
+                        </ul>
+                        <p><span class="time-estimate">5 min</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FASE 2: TRAINING EXECUTION -->
+            <h2>📍 FASE 2: Model Training (2-4 uur, afhankelijk van hardware)</h2>
+
+            <div class="phase-box">
+                <p><strong>Kernactiviteit:</strong> Voer training uit op 50k Wikipedia tokensample.</p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot">4</div>
+                    <div class="timeline-content">
+                        <h4>Start Training Script</h4>
+                        <p><strong>Opdracht:</strong></p>
+                        <div style="background: #f4f4f4; padding: 10px; margin: 10px 0; border-radius: 5px; font-family: monospace; font-size: 0.9em; overflow-x: auto;">
+python E:/Claude/workflow/WatergeusLLM/04_train_model.py
+                        </div>
+                        <p style="margin-top: 10px;"><strong>Wat gebeurt er:</strong></p>
+                        <ul class="detail-list">
+                            <li>Model geladen (33.6M parameters)</li>
+                            <li>Dataset geladen in batches van 32</li>
+                            <li>3 epochs uitvoering met progress bar</li>
+                            <li>Loss, validation loss, gradient norms gelogd</li>
+                            <li>Best checkpoint opgeslagen in <code>checkpoints/best_model.pt</code></li>
+                            <li>Training history opgeslagen in <code>training_history.json</code></li>
+                        </ul>
+                        <p style="margin-top: 15px;"><span class="time-estimate">~2-4 uur</span> (afhankelijk van GPU/CPU)</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot">5</div>
+                    <div class="timeline-content">
+                        <h4>Monitor Training (Real-time)</h4>
+                        <p><strong>Wat te letten op:</strong></p>
+                        <ul class="detail-list">
+                            <li><strong>Loss moet dalen:</strong> Start ~5-7, eindigen ~2-3 (normaal)</li>
+                            <li><strong>Gradient norm:</strong> Moet stabiel blijven (0.5-2.0 is goed, >10 is probleem)</li>
+                            <li><strong>Geen crashes:</strong> Shape validation vangt data bugs</li>
+                            <li><strong>Validation loss:</strong> Moet ongeveer volgen training loss</li>
+                        </ul>
+                        <p style="margin-top: 10px; padding: 10px; background: #fff3cd; border-radius: 3px;">
+                            <strong>⚠️ Als gradient norm > 10:</strong> Training loopt, maar instabiel. Check dataloader.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot">6</div>
+                    <div class="timeline-content">
+                        <h4>Troubleshooting (Indien Nodig)</h4>
+                        <p><strong>Mogelijke Problemen & Oplossingen:</strong></p>
+                        <ul class="detail-list">
+                            <li><strong>"Cuda out of memory":</strong> Verlaag batch_size van 32 naar 16 in 04_train_model.py</li>
+                            <li><strong>"Shape mismatch":</strong> ValueError wordt gegooid → check input data shapes</li>
+                            <li><strong>"NaN loss":</strong> Learning rate te hoog → verlaag van 0.001 naar 0.0001</li>
+                            <li><strong>"Training hangs":</strong> DataLoader probleem → controleer data bestanden</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FASE 3: ANALYSE & EVALUATION -->
+            <h2>📍 FASE 3: Post-Training Analyse (30-60 minuten)</h2>
+
+            <div class="phase-box">
+                <p>Na training: analyseer resultaten en bewaar metrics.</p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot">7</div>
+                    <div class="timeline-content">
+                        <h4>Training History Analyse</h4>
+                        <p><strong>Wat:</strong> Lees <code>training_history.json</code> en creëer visualisatie</p>
+                        <ul class="detail-list">
+                            <li>Parse training_history.json (loss per epoch, validation loss, gradients)</li>
+                            <li>Plot loss curve: Moet monotoon dalen</li>
+                            <li>Plot gradient norms: Moet stabiel blijven</li>
+                            <li>Report: "Training loss daled van X naar Y" (kwantificeer)</li>
+                        </ul>
+                        <p><span class="time-estimate">20 min</span></p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot">8</div>
+                    <div class="timeline-content">
+                        <h4>Model Checkpoint Inspectie</h4>
+                        <p><strong>Wat:</strong> Verifieer best_model.pt is geldig en loadable</p>
+                        <ul class="detail-list">
+                            <li>Load checkpoint: <code>torch.load('checkpoints/best_model.pt')</code></li>
+                            <li>Controleer: Dict bevat 'model_state', 'config', 'timestamp'</li>
+                            <li>Test: Instantieer NanoGPT en laad state_dict</li>
+                            <li>Verify: Model kan forward pass doen op dummy input</li>
+                        </ul>
+                        <p><span class="time-estimate">15 min</span></p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot">9</div>
+                    <div class="timeline-content">
+                        <h4>Documentatie Genereren</h4>
+                        <p><strong>Wat:</strong> Genereer Stap 4 rapportage</p>
+                        <ul class="detail-list">
+                            <li>HTML report: "STAP4_TRAINING_RESULTATEN.html"</li>
+                            <li>Inclusief: Loss curves, training metrics, duration, hardware used</li>
+                            <li>Inclusief: Gradient norm analysis (was training stabiel?)</li>
+                            <li>Inclusief: Bevindingen & waarnemingen</li>
+                        </ul>
+                        <p><span class="time-estimate">25 min</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FASE 4: NEXT STEPS -->
+            <h2>📍 FASE 4: Voorbereiding Stap 5 (30 minuten)</h2>
+
+            <div class="phase-box">
+                <p>Voorbereiding voor text generation & model evaluation.</p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot">10</div>
+                    <div class="timeline-content">
+                        <h4>Text Generation Pipeline Bouw</h4>
+                        <p><strong>Wat:</strong> Creëer script om getraind model tekst te laten genereren</p>
+                        <ul class="detail-list">
+                            <li>Nieuw script: <code>05_text_generation.py</code></li>
+                            <li>Functie: <code>generate(model, prompt, max_length=100)</code></li>
+                            <li>Functie moet: Prompt tokenizeren → recursief volgende tokens samplen → detokenizeren</li>
+                            <li>Feature: Temperature parameter (hoe "creatief" is output)</li>
+                        </ul>
+                        <p><span class="time-estimate">20 min</span></p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot">11</div>
+                    <div class="timeline-content">
+                        <h4>Eerste Generatie Test</h4>
+                        <p><strong>Wat:</strong> Test model met Nederlands prompts</p>
+                        <ul class="detail-list">
+                            <li>Prompt 1: "De geschiedenis van Nederland"</li>
+                            <li>Prompt 2: "Kunstmatige intelligentie"</li>
+                            <li>Prompt 3: "Amsterdam is"</li>
+                            <li>Controleer: Genereert het Nederlands (geen gibberish)?</li>
+                            <li>Controleer: Is coherentie aanwezig?</li>
+                        </ul>
+                        <p><span class="time-estimate">10 min</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUMMARY TABLE -->
+            <h2>📊 Samenvatting Volledige Timeline</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fase</th>
+                        <th>Activiteit</th>
+                        <th>Duur</th>
+                        <th>Totaal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>FASE 1</strong></td>
+                        <td>Voorbereiding & Validatie</td>
+                        <td>5+5+5 min</td>
+                        <td><strong>15 min</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>FASE 2</strong></td>
+                        <td>Training Execution</td>
+                        <td>120-240 min</td>
+                        <td><strong>2-4 uur</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>FASE 3</strong></td>
+                        <td>Post-Training Analyse</td>
+                        <td>20+15+25 min</td>
+                        <td><strong>60 min</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>FASE 4</strong></td>
+                        <td>Stap 5 Voorbereiding</td>
+                        <td>20+10 min</td>
+                        <td><strong>30 min</strong></td>
+                    </tr>
+                    <tr style="font-weight: bold; background: #e3f2fd;">
+                        <td colspan="2">TOTALE TIJD (excl. training hang time)</td>
+                        <td>~250-370 min</td>
+                        <td><strong>~4-6 uur</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="total-time">
+                ⏱️ Geschatte totale duur: <strong>6-10 uur</strong> (afhankelijk van GPU beschikbaarheid)<br>
+                📌 Training zelf: 2-4 uur, rest: ~3 uur active work
+            </div>
+
+            <!-- KRITIEKE OPMERKINGEN -->
+            <h2>⚠️ Kritieke Opmerkingen</h2>
+
+            <div class="warning-box">
+                <h3>Slaaproutine & Realism</h3>
+                <p>
+                    Het is nu 02:30 uur. Training duurt 2-4 uur afhankelijk van GPU. Realistisch:
+                </p>
+                <ul style="margin: 15px 0 0 20px;">
+                    <li><strong>Scenario A (GPU beschikbaar):</strong> Training af om 06:30-08:30 uur → analyse & rapportage → Stap 5 start voor ontbijt</li>
+                    <li><strong>Scenario B (CPU only):</strong> Training duurt 6-8 uur → zou tot 10:30-12:30 uur lopen → slaap aanbevolen</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <h3>Data Pipeline Fouten Voorkomen</h3>
+                <p>
+                    Shape validatie is nu in place. Maar monitoring is essentieel:
+                </p>
+                <ul style="margin: 15px 0 0 20px;">
+                    <li>Kijk elke 5 minuten naar console output</li>
+                    <li>Controleer gradient norms (moeten tussen 0.1-2.0 blijven)</li>
+                    <li>Als loss > 10 na epoch 1 → iets mis (data? model? LR?)</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <h3>Checkpoint Management</h3>
+                <p>
+                    Training spaart best model op:
+                </p>
+                <ul style="margin: 15px 0 0 20px;">
+                    <li>Lokatie: <code>checkpoints/best_model.pt</code> (overschrijft oude versie)</li>
+                    <li>Backup: Copy naar <code>backup/best_model_DATUM.pt</code> zodra training klaar</li>
+                    <li>Storage: ~100 MB per checkpoint (geen probleem op 858 GB vrije ruimte)</li>
+                </ul>
+            </div>
+
+            <!-- QUICK START -->
+            <h2>🚀 Quick Start - Volgende Command</h2>
+
+            <div class="summary-box">
+                <h3>Zodra je klaar bent:</h3>
+                <p style="margin-bottom: 15px;">
+                    Voer dit commando uit in bash/terminal:
+                </p>
+                <div style="background: #f4f4f4; padding: 15px; border-radius: 5px; font-family: monospace; font-size: 0.9em; overflow-x: auto;">
+cd /e/Claude/workflow/WatergeusLLM && python 04_train_model.py
+                </div>
+                <p style="margin-top: 15px;">
+                    Dit start training. Verwacht:
+                </p>
+                <ul style="margin-top: 10px;">
+                    <li>Progress bar per epoch</li>
+                    <li>Loss output elke batch</li>
+                    <li>Gradient norm logging elke 100 batches</li>
+                    <li>Validation na elk epoch</li>
+                    <li>Best model opgeslagen</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <footer>
+            <p><strong>Stap 4+ Plan & Timeline - WatergeusLLM</strong></p>
+            <p>Gedetailleerde stappen, timings, en troubleshooting</p>
+            <p style="margin-top: 15px;">
+                ✅ Voorbereiding: COMPLEET (15 min)<br>
+                ⏳ Training: READY (2-4 uur)<br>
+                📊 Analyse: PLANNED (60 min)<br>
+                🎯 Volgende Stap: TEXT GENERATION
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

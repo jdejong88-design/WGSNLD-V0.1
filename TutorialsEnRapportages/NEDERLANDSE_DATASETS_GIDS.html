@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nederlandse Datasets Downloaden - Stap-voor-Stap Gids</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            padding: 40px;
+        }
+        h1 {
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #764ba2;
+            margin-top: 35px;
+            margin-bottom: 15px;
+            padding-top: 15px;
+        }
+        .section {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .step {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 15px;
+            counter-increment: step-counter;
+        }
+        .step::before {
+            content: "Stap " counter(step-counter) ": ";
+            font-weight: bold;
+            color: #667eea;
+            font-size: 16px;
+        }
+        .step h3 {
+            color: #764ba2;
+            margin-bottom: 10px;
+        }
+        .step p {
+            margin-bottom: 10px;
+        }
+        .code {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-size: 13px;
+        }
+        .code-inline {
+            background: #f0f0f0;
+            color: #d63384;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            color: #856404;
+        }
+        .success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            color: #155724;
+        }
+        .info {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            color: #0c5460;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        table th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        table td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        table tr:hover {
+            background: #f5f5f5;
+        }
+        .dataset-card {
+            border: 2px solid #667eea;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+        }
+        .dataset-card h4 {
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+        .dataset-card .size {
+            font-weight: bold;
+            color: #764ba2;
+        }
+        .checklist {
+            list-style: none;
+        }
+        .checklist li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .checklist li:before {
+            content: "☐ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #ddd;
+            color: #666;
+            font-size: 12px;
+        }
+        counter-reset: step-counter;
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔬 Nederlandse Datasets Downloaden - Complete Gids</h1>
+
+        <h2>📋 Overzicht</h2>
+        <p>Dit document beschrijft hoe je Nederlandse datasets van Hugging Face downloadt voor LLM-training.</p>
+
+        <div class="section">
+            <strong>Locatie:</strong> <span class="code-inline">E:\Claude\workflow\WatergeusLLM\datasets</span><br>
+            <strong>Scripts:</strong> <span class="code-inline">E:\dutch-llm\data\</span><br>
+            <strong>Totale grootte:</strong> ~27 GB (3 datasets)
+        </div>
+
+        <h2>🎯 Beschikbare Datasets</h2>
+
+        <div class="dataset-card">
+            <h4>✓ Wikipedia NL</h4>
+            <p><span class="size">2.5 GB</span> | 2.1 miljoen artikelen</p>
+            <p>Nederlandse Wikipedia teksten. <strong>STATUS: Klaar</strong></p>
+        </div>
+
+        <div class="dataset-card">
+            <h4>✓ MC4 Dutch</h4>
+            <p><span class="size">4.58 GB</span> | 365K teksten</p>
+            <p>Schone web-teksten uit Common Crawl. <strong>STATUS: Klaar</strong></p>
+        </div>
+
+        <div class="dataset-card">
+            <h4>✓ SQuAD NL</h4>
+            <p><span class="size">~100 MB</span> | 130K Q&A</p>
+            <p>Vraag-antwoord dataset. <strong>STATUS: Klaar</strong></p>
+        </div>
+
+        <div class="dataset-card">
+            <h4>⏳ Oscar NL (Gated)</h4>
+            <p><span class="size">8-10 GB</span> | 8.6 miljoen documenten</p>
+            <p>Web-teksten. Vereist acceptatie op HF. <strong>STATUS: Nog niet beschikbaar</strong></p>
+        </div>
+
+        <div class="dataset-card">
+            <h4>⏳ CC100 Dutch (Gated)</h4>
+            <p><span class="size">2-3 GB</span> | Common Crawl 100</p>
+            <p>Web-crawl data. Vereist acceptatie op HF. <strong>STATUS: Nog niet beschikbaar</strong></p>
+        </div>
+
+        <h2>🔐 Stap 1: Hugging Face Account Setup</h2>
+
+        <div class="step">
+            <h3>Account maken (als je die nog niet hebt)</h3>
+            <p>Ga naar <strong>https://huggingface.co</strong> en maak een account aan.</p>
+            <p>Verifieer je email-adres.</p>
+        </div>
+
+        <div class="step">
+            <h3>Access Token genereren</h3>
+            <ol style="margin-left: 20px;">
+                <li>Log in op HuggingFace</li>
+                <li>Ga naar <strong>Instellingen → Access Tokens</strong></li>
+                <li>Klik op <strong>"New token"</strong></li>
+                <li>Kies <strong>"Read"</strong> permission</li>
+                <li>Kopieer je token (begint met <span class="code-inline">hf_</span>)</li>
+            </ol>
+        </div>
+
+        <div class="info">
+            <strong>💡 Je token:</strong><br>
+            <span class="code-inline">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</span><br>
+            Dit is beveiligd opgeslagen in je omgeving.
+        </div>
+
+        <h2>📦 Stap 2: Gated Datasets Accepteren</h2>
+
+        <div class="step">
+            <h3>Oscar NL accepteren</h3>
+            <p>Ga naar: <strong>https://huggingface.co/datasets/oscar-corpus/OSCAR-2301</strong></p>
+            <ol style="margin-left: 20px;">
+                <li>Klik <strong>"Access repository"</strong> of <strong>"Agree and access repository"</strong></li>
+                <li>Lees de voorwaarden</li>
+                <li>Klik <strong>"Agree"</strong></li>
+                <li>Je hebt nu toegang!</li>
+            </ol>
+        </div>
+
+        <div class="step">
+            <h3>CC100 accepteren</h3>
+            <p>Ga naar: <strong>https://huggingface.co/datasets/cc100</strong></p>
+            <ol style="margin-left: 20px;">
+                <li>Hetzelfde proces als Oscar</li>
+                <li>Accepteer de licentie</li>
+            </ol>
+        </div>
+
+        <h2>🚀 Stap 3: Python Environment Setup</h2>
+
+        <div class="step">
+            <h3>Benodigde packages</h3>
+            <p>Alle packages zijn al geïnstalleerd, maar hier is het commando:</p>
+            <div class="code">pip install datasets transformers huggingface-hub torch tqdm</div>
+        </div>
+
+        <div class="step">
+            <h3>Hugging Face CLI inloggen</h3>
+            <p>Voer dit uit in je terminal:</p>
+            <div class="code">huggingface-cli login</div>
+            <p>Plak je token wanneer gevraagd.</p>
+        </div>
+
+        <h2>💾 Stap 4: Datasets Downloaden</h2>
+
+        <div class="step">
+            <h3>Download script uitvoeren</h3>
+            <p>Script locatie: <span class="code-inline">E:\dutch-llm\data\download_dutch_complete.py</span></p>
+            <div class="code">cd E:/dutch-llm/data
+python download_dutch_complete.py</div>
+            <p>Dit zal alle beschikbare datasets downloaden.</p>
+        </div>
+
+        <div class="warning">
+            <strong>⚠️ Let op:</strong><br>
+            • Download kan 30-60 minuten duren<br>
+            • Zorg voor ~30 GB vrije schijfruimte<br>
+            • Stabiele internetverbinding nodig
+        </div>
+
+        <div class="success">
+            <strong>✓ Download voltooid</strong><br>
+            Alle datasets zijn nu in: <span class="code-inline">E:\Claude\workflow\WatergeusLLM\datasets\</span>
+        </div>
+
+        <h2>🔧 Python Script Uitleg</h2>
+
+        <div class="section">
+            <h3>Hoe het script werkt:</h3>
+            <ol style="margin-left: 20px; line-height: 2;">
+                <li><strong>Import libraries:</strong> Laden van <span class="code-inline">datasets</span> en bestandsoperaties</li>
+                <li><strong>Definieer datasets:</strong> Lijst van repo IDs en configs</li>
+                <li><strong>Loop over datasets:</strong> Voor elk dataset:</li>
+                <ul style="margin-left: 20px; margin-top: 5px;">
+                    <li>Load van Hugging Face</li>
+                    <li>Opslaan naar disk</li>
+                    <li>Error handling voor gated datasets</li>
+                </ul>
+                <li><strong>Rapportage:</strong> Toon status en locaties</li>
+            </ol>
+        </div>
+
+        <h3>Voorbeeld Python Code:</h3>
+        <div class="code">from datasets import load_dataset
+
+# Download dataset
+dataset = load_dataset('allenai/c4', 'nl', split='train')
+
+# Opslaan
+dataset.save_to_disk('E:/Claude/workflow/WatergeusLLM/datasets/mc4_nl')</div>
+
+        <h2>📊 Dataset Statistieken</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Dataset</th>
+                    <th>Grootte</th>
+                    <th>Rijen</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Wikipedia NL</td>
+                    <td>2.5 GB</td>
+                    <td>2.1M</td>
+                    <td>Tekst</td>
+                    <td>✓ Klaar</td>
+                </tr>
+                <tr>
+                    <td>MC4 Dutch</td>
+                    <td>4.58 GB</td>
+                    <td>365K</td>
+                    <td>Web</td>
+                    <td>✓ Klaar</td>
+                </tr>
+                <tr>
+                    <td>SQuAD NL</td>
+                    <td>~100 MB</td>
+                    <td>130K</td>
+                    <td>Q&A</td>
+                    <td>✓ Klaar</td>
+                </tr>
+                <tr>
+                    <td>Oscar NL</td>
+                    <td>8-10 GB</td>
+                    <td>8.6M</td>
+                    <td>Web</td>
+                    <td>⏳ Gated</td>
+                </tr>
+                <tr>
+                    <td>CC100 Dutch</td>
+                    <td>2-3 GB</td>
+                    <td>-</td>
+                    <td>Crawl</td>
+                    <td>⏳ Gated</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>🐛 Troubleshooting</h2>
+
+        <div class="step">
+            <h3>Probleem: "Authentication required"</h3>
+            <p><strong>Oplossing:</strong></p>
+            <div class="code">huggingface-cli login
+# Plak je token en druk op Enter</div>
+        </div>
+
+        <div class="step">
+            <h3>Probleem: "Dataset is gated"</h3>
+            <p><strong>Oplossing:</strong> Accepteer het dataset op de Hugging Face website (zie Stap 2)</p>
+        </div>
+
+        <div class="step">
+            <h3>Probleem: "No space left on device"</h3>
+            <p><strong>Oplossing:</strong> Zorg voor ~30 GB vrije ruimte op je E:-schijf</p>
+            <div class="code">powershell -Command "Get-PSDrive E"</div>
+        </div>
+
+        <div class="step">
+            <h3>Probleem: Download is traag</h3>
+            <p><strong>Tips:</strong></p>
+            <ul style="margin-left: 20px;">
+                <li>Controleer je internetverbinding</li>
+                <li>Download buiten piekuren</li>
+                <li>Sluit andere downloads</li>
+            </ul>
+        </div>
+
+        <h2>📁 Bestandsstructuur</h2>
+
+        <div class="code">E:\Claude\workflow\WatergeusLLM\
+├── datasets\
+│   ├── wikipedia_nl\          (2.5 GB)
+│   ├── mc4_nl\                (4.58 GB)
+│   ├── squad_nl\              (100 MB)
+│   └── [oscar_nl]             (gated)
+│
+├── NEDERLANDSE_DATASETS_GIDS.html (dit bestand)
+└── WatergeusLLM\              (LLM training scripts)</div>
+
+        <h2>✨ Volgende Stappen</h2>
+
+        <div class="info">
+            <strong>Na download klaar is:</strong>
+            <ol style="margin-left: 20px;">
+                <li>Datasets onderzoeken: <span class="code-inline">dataset.info()</span></li>
+                <li>Data preprocessing</li>
+                <li>Tokenization voor model training</li>
+                <li>Training starten met Transformers</li>
+            </ol>
+        </div>
+
+        <div class="section">
+            <h3>Voorbeeld: Dataset verkennen</h3>
+            <div class="code">from datasets import load_from_disk
+
+# Laden
+dataset = load_from_disk('E:/Claude/workflow/WatergeusLLM/datasets/wikipedia_nl')
+
+# Info
+print(f"Samples: {len(dataset)}")
+print(f"Columns: {dataset.column_names}")
+print(dataset[0])</div>
+        </div>
+
+        <h2>📚 Extra Resources</h2>
+
+        <ul style="margin-left: 20px;">
+            <li><strong>Hugging Face Datasets:</strong> https://huggingface.co/datasets</li>
+            <li><strong>HF Documentation:</strong> https://huggingface.co/docs/datasets</li>
+            <li><strong>Transformers Library:</strong> https://huggingface.co/docs/transformers</li>
+            <li><strong>Dutch NLP:</strong> https://github.com/LanguageMachines/frog</li>
+        </ul>
+
+        <div class="footer">
+            <p>Generated: 2026-04-26 | Gids versie 1.0</p>
+            <p>Voor vragen: check Hugging Face documentation of communities</p>
+        </div>
+    </div>
+</body>
+</html>

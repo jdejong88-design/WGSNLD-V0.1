@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>WatergeusLLM Mission Control</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #0b0e14; color: #e0e0e0; margin: 20px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .card { background: #161b22; border: 1px solid #30363d; padding: 20px; border-radius: 8px; }
+        .metric { font-size: 2em; color: #58a6ff; }
+        .progress-container { width: 100%; background: #30363d; height: 20px; border-radius: 10px; margin: 20px 0; }
+        .progress-bar { height: 100%; background: #238636; width: 0%; border-radius: 10px; transition: width 0.5s; }
+        h1 { color: #58a6ff; }
+    </style>
+</head>
+<body>
+    <h1>🚀 WatergeusLLM Mission Control</h1>
+    
+    <div class="grid">
+        <div class="card">
+            <h3>Voortgang Epoch</h3>
+            <div id="batch-text" class="metric">0 / 1391</div>
+            <div class="progress-container">
+                <div id="progress-bar" class="progress-bar"></div>
+            </div>
+        </div>
+        <div class="card">
+            <h3>Laatste Loss</h3>
+            <div id="loss-text" class="metric">0.0000</div>
+        </div>
+    </div>
+
+    <div class="grid" style="margin-top: 20px;">
+        <div class="card"><canvas id="lossChart"></canvas></div>
+        <div class="card"><canvas id="gradChart"></canvas></div>
+    </div>
+
+    <script>
+        let lossChart, gradChart;
+
+        function initCharts() {
+            const commonOptions = { responsive: true, scales: { y: { beginAtZero: false } } };
+            lossChart = new Chart(document.getElementById('lossChart'), {
+                type: 'line',
+                data: { labels: [], datasets: [{ label: 'Training Loss', data: [], borderColor: '#58a6ff' }] },
+                options: commonOptions
+            });
+            gradChart = new Chart(document.getElementById('gradChart'), {
+                type: 'line',
+                data: { labels: [], datasets: [{ label: 'Gradient Norm', data: [], borderColor: '#d29922' }] },
+                options: commonOptions
+            });
+        }
+
+        async function updateDashboard() {
+            try {
+                const response = await fetch('stats.json');
+                const data = await response.json();
+                
+                // Update Tekst & Balk
+                const cur = data.current;
+                document.getElementById('batch-text').innerText = `${cur.batch} / ${cur.total_batches}`;
+                document.getElementById('loss-text').innerText = cur.loss.toFixed(4);
+                document.getElementById('progress-bar').style.width = (cur.batch / cur.total_batches * 100) + '%';
+
+                // Update Grafieken
+                const labels = data.history.map(h => h.batch);
+                lossChart.data.labels = labels;
+                lossChart.data.datasets[0].data = data.history.map(h => h.loss);
+                gradChart.data.labels = labels;
+                gradChart.data.datasets[0].data = data.history.map(h => h.grad);
+                
+                lossChart.update();
+                gradChart.update();
+            } catch (e) { console.log("Wachten op data..."); }
+        }
+
+        initCharts();
+        setInterval(updateDashboard, 1000);
+    </script>
+</body>
+</html>

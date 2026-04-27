@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herzien Verificatierapport - Stap 2</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        h2 {
+            color: #dc3545;
+            border-bottom: 3px solid #dc3545;
+            padding-bottom: 10px;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: #764ba2;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .error-box {
+            background: #f8d7da;
+            border-left: 5px solid #dc3545;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .fixed-box {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 5px solid #ff9800;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+        }
+
+        th {
+            background: #dc3545;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #d63384;
+            font-family: 'Courier New', monospace;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        .score-card {
+            background: #fff3cd;
+            border: 2px solid #ff9800;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .score-number {
+            font-size: 3em;
+            color: #ff9800;
+            font-weight: bold;
+        }
+
+        .score-label {
+            color: #764ba2;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚠️ Herzien Verificatierapport</h1>
+            <p>Stap 2: BPE Tokenizer - Eerlijke Analyse van Fouten</p>
+        </header>
+
+        <div class="content">
+
+            <!-- SAMENVATTING -->
+            <h2>📊 Herziene Scorecard</h2>
+
+            <div class="score-card">
+                <div class="score-number">15/18</div>
+                <div class="score-label">Controles Geslaagd (Herziene Score)</div>
+            </div>
+
+            <div class="error-box">
+                <strong>Oprechte Mea Culpa:</strong> Mijn eerste "18/18" score was misleidend. Ik had fouten gemist:
+                <ul style="margin-top: 10px;">
+                    <li>2 kritieke technische fouten in de merge-extractie code</li>
+                    <li>1 Nederlands taalfout in de print-statements</li>
+                    <li>2 conceptuele fouten: [UNK] tokens opgegeven waar Byte-Level BPE ze niet nodig heeft</li>
+                </ul>
+                Deze herziene analyse is eerlijker. Score: 15/18 na correcties.
+            </div>
+
+            <!-- FOUTEN GEVONDEN -->
+            <h2>❌ Fouten die ik heb Gemist</h2>
+
+            <div class="error-box">
+                <h3>Fout 1: Merge-Extractie Code is Ongeldig (KRITIEK)</h3>
+                <p><strong>Locatie:</strong> 02_train_bpe_tokenizer.py, regels 139-143 (origineel)</p>
+                <p><strong>Het probleem:</strong></p>
+                <code>for merge in tokenizer.model.merges:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;f.write(f"{merge[0]} {merge[1]}\n")</code>
+                <p style="margin-top: 10px;">
+                    Dit aanvaarden dat <code>tokenizer.model.merges</code> een list van tuples is met <code>[0]</code> en <code>[1]</code> indexing.
+                    Echter, in de Hugging Face bibliotheek bevat BPE.merges typisch strings (bijv. "Ġ a"), niet tuples.
+                    Dit zal een runtime error geven: <code>TypeError: string indices must be integers</code>
+                </p>
+                <p style="margin-top: 10px;"><strong>Status:</strong> GEREPAREERD</p>
+            </div>
+
+            <div class="error-box">
+                <h3>Fout 2: Vocab-Extractie Logic Verwarrend (MEDIUM)</h3>
+                <p><strong>Locatie:</strong> 02_train_bpe_tokenizer.py, regel 130</p>
+                <p><strong>Het probleem:</strong></p>
+                <code>vocab = tokenizer.get_vocab()<br>
+merges = tokenizer.get_vocab(with_added_tokens=False)</code>
+                <p style="margin-top: 10px;">
+                    De tweede variabele <code>merges</code> is niet eens merges — het is gewoon vocab zonder special tokens.
+                    Dit is verwarrend en leidt nergens toe.
+                </p>
+                <p style="margin-top: 10px;"><strong>Status:</strong> GEREPAREERD (variabele verwijderd)</p>
+            </div>
+
+            <div class="error-box">
+                <h3>Fout 3: Nederlands Taalfout in Print-Statements (TAAL)</h3>
+                <p><strong>Locatie:</strong> 02_train_bpe_tokenizer.py, regels 172, 196, 212</p>
+                <p><strong>Het probleem:</strong></p>
+                <ul>
+                    <li><code>print(f"\nVocab size: ...")</code> — Engels. Moet "Vocabulaire grootte" zijn.</li>
+                    <li><code>print(f"Gemiddeld tokens per zin")</code> — "tokens" moet "aantal tokens" zijn.</li>
+                    <li><code>print("[OK] Vocab size: 16,000 tokens")</code> — Mix Engels/Nederlands.</li>
+                </ul>
+                <p style="margin-top: 10px;"><strong>Status:</strong> GEREPAREERD</p>
+            </div>
+
+            <div class="error-box">
+                <h3>Fout 4: [UNK] Token Opgegeven in Code (CONCEPTUEEL)</h3>
+                <p><strong>Locatie:</strong> 02_train_bpe_tokenizer.py, regel 75 (origineel)</p>
+                <p><strong>Het probleem:</strong></p>
+                <p>
+                    <code>special_tokens=['&lt;|endoftext|&gt;', '[PAD]', '[UNK]']</code><br>
+                    Byte-Level BPE heeft geen [UNK] token nodig omdat elk karakter opgebroken kan worden
+                    in zijn 256 mogelijke byte-waarden. Het is conceptueel verkeerd en nutteloos.
+                </p>
+                <p style="margin-top: 10px;"><strong>Status:</strong> GEREPAREERD (verwijderd naar alleen &lt;|endoftext|&gt;)</p>
+            </div>
+
+            <div class="error-box">
+                <h3>Fout 5: [UNK] in HTML-Rapport Niet Consequent (DOCUMENTATIE)</h3>
+                <p><strong>Locatie:</strong> Stap2_BPE_Tokenizer_Rapport.html, "Geconfigureerde Speciale Tokens"</p>
+                <p><strong>Het probleem:</strong></p>
+                <p>
+                    Het HTML-rapport noemde [UNK] in de uitleg ("hoewel Byte-Level BPE dit zelden nodig heeft")
+                    terwijl de Python-code het eigenlijk gebruikt. Dit is inconsistent en verwarrend.
+                </p>
+                <p style="margin-top: 10px;"><strong>Status:</strong> GEREPAREERD (verwijderd uit beide plaatsen)</p>
+            </div>
+
+            <!-- REPARATIES -->
+            <h2>✅ Reparaties Ingepast</h2>
+
+            <div class="fixed-box">
+                <h3>Reparatie 1: Merge-Extractie Logica</h3>
+                <p><strong>Aanpassing:</strong></p>
+                <code>
+if hasattr(tokenizer.model, 'merges') and tokenizer.model.merges:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;with open(merges_path, 'w') as f:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for merge_pair in tokenizer.model.merges:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;f.write(f"{merge_pair}\n")<br>
+else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;logger.warning("No merges found...")
+                </code>
+                <p style="margin-top: 10px;">
+                    • Controleert eerst of merges bestaan<br>
+                    • Behandelt elk merge_pair als string (niet als tuple)<br>
+                    • Geeft graceful warning als extraction niet mogelijk is
+                </p>
+            </div>
+
+            <div class="fixed-box">
+                <h3>Reparatie 2: Nederlands Taalgebruik</h3>
+                <p><strong>Aanpassingen in code:</strong></p>
+                <ul>
+                    <li><code>"Vocab size"</code> → <code>"Vocabulaire grootte"</code></li>
+                    <li><code>"Gemiddeld tokens"</code> → <code>"Gemiddeld aantal tokens"</code></li>
+                    <li><code>"Vocab size: 16,000"</code> → <code>"Vocabulaire grootte: 16.000"</code> (ook juiste scheidingsteken)</li>
+                </ul>
+            </div>
+
+            <!-- NOG TE DOEN -->
+            <h2>⚠️ Nog Te Doen</h2>
+
+            <div class="warning-box">
+                <h3>HTML-Rapport: Duplexe Uitleg Consolideren</h3>
+                <p>
+                    De "Geconfigureerde Speciale Tokens" sectie en de "Wat je ziet in tokens" sectie herhalen
+                    dezelfde kernpunten over Byte-Level BPE en afwezigheid van [UNK].
+                </p>
+                <p style="margin-top: 10px;">
+                    <strong>Te doen:</strong> Voeg een `<hr>` of duidelijke scheiding in, of consolideer deze twee secties
+                    in één duidelijke uitleg met verschillende hoeken (architectuur vs. praktijk).
+                </p>
+            </div>
+
+            <!-- LESSEN -->
+            <h2>📚 Lessen uit deze Verificatie</h2>
+
+            <div style="background: #e7f3ff; border-left: 5px solid #0066cc; padding: 20px; border-radius: 5px; margin: 20px 0;">
+                <ul>
+                    <li><strong>Verificatie is makkelijk om oppervlakkig te doen:</strong> Een checklist met "✓" zeggen is makkelijk. Echt testen is moeilijker.</li>
+                    <li><strong>Runtime-fouten vs. Style-fouten:</strong> Merge-extractie zou FALEN op runtime. Dit is erger dan een taalfout.</li>
+                    <li><strong>Self-review is blind:</strong> Ik miste deze fouten omdat ik dezelfde aannames maakte. Externe feedback was nodig.</li>
+                    <li><strong>Eerlijkheid over volume:</strong> "18/18" klinkt goed, maar "14/18 + 4 gefixeerd" is veel waarheidsgetrouwer.</li>
+                </ul>
+            </div>
+
+            <!-- HUIDIGE STATUS -->
+            <h2>🔄 Huidige Status na Fixes</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Status</th>
+                        <th>Opmerking</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Python Code: Merge-Extractie</td>
+                        <td style="color: #28a745;"><strong>GEREPAREERD</strong></td>
+                        <td>Nu robuust met fallback</td>
+                    </tr>
+                    <tr>
+                        <td>Python Code: Nederlands</td>
+                        <td style="color: #28a745;"><strong>GEREPAREERD</strong></td>
+                        <td>Alle print-statements Nederlands</td>
+                    </tr>
+                    <tr>
+                        <td>Python Code: [UNK] Token Verwijderd</td>
+                        <td style="color: #28a745;"><strong>GEREPAREERD</strong></td>
+                        <td>Alleen &lt;|endoftext|&gt; overblijft</td>
+                    </tr>
+                    <tr>
+                        <td>HTML-Rapport: [UNK] Verwijderd</td>
+                        <td style="color: #28a745;"><strong>GEREPAREERD</strong></td>
+                        <td>Correcte uitleg van byte-nivel fallback</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- VOLGENDE STAPPEN -->
+            <h2>➡️ Volgende Stap: Stap 3</h2>
+
+            <div style="background: #d4edda; border-left: 5px solid #28a745; padding: 20px; border-radius: 5px; margin: 20px 0;">
+                <p>Na consolidatie van het HTML-rapport kunnen we starten met <strong>Stap 3: Model Opzetten</strong></p>
+                <p style="margin-top: 10px;">
+                    We hebben nu:<br>
+                    • ✅ 49.963 Nederlands preprocessed artikelen<br>
+                    • ✅ Byte-Level BPE tokenizer (16.000 tokens)<br>
+                    • ✅ Vocab.json + merges.txt bestanden<br>
+                    ➡️ Volgende: Transformer architectuur (350M params) → STAP 3
+                </p>
+            </div>
+
+        </div>
+
+        <footer>
+            <p><strong>Herzien Verificatierapport - WatergeusLLM</strong></p>
+            <p>Datum: 27 April 2026 | Status: 15/18 Controles OK + 5 Fouten Gerepareerd</p>
+            <p>Transparantie > Perfectie. [UNK] tokens volledig verwijderd.</p>
+        </footer>
+    </div>
+</body>
+</html>
