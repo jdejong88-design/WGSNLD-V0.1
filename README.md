@@ -45,15 +45,47 @@ Training draait met **checkpoint-recovery**: elke 5.000 batches wordt een checkp
 
 ## Status
 
-- ✅ Data preprocessing
-- ✅ Tokenizer training
-- ✅ Model architectuur
-- 🔄 **Training in progress** (Epoch 1/3, batch ~22.500)
-- ⏳ Tekstgeneratie
+- ✅ Data preprocessing (50.000 samples)
+- ✅ Tokenizer training (16.000 BPE vocab)
+- ✅ Model architectuur (30M params, 6 layers)
+- 🔄 **Training in progress** (Epoch 1/3, batch ~48.300/15.408.626)
+- ✅ Checkpoint recovery system (every 5k batches)
+- ⏳ Colab transition (A100 GPU training)
+- ⏳ Tekstgeneratie (na training)
 
-## Checkpoints
+## Checkpoints & Data
 
-Checkpoints worden opgeslagen in `checkpoints/` en zijn niet in GitHub opgenomen (te groot). Ze staan op lokale schijf en Google Drive.
+Checkpoints worden opgeslagen in `checkpoints/` en zijn niet in GitHub opgenomen (te groot). Ze staan op:
+- **Lokaal:** `E:/Claude/workflow/WatergeusLLM/checkpoints/`
+- **Google Drive:** `MyDrive/WatergeusLLM/checkpoints/`
+
+Tokenized data (`tokens/`) en preprocessed Arrow data ook niet in GitHub.
+
+## Cloud Training (Google Colab)
+
+Voor sneller training op A100 GPU:
+
+```bash
+# In Colab Cell 1:
+!git clone https://github.com/jdejong88-design/WGSNLD-V0.1.git /content/repo
+cd /content/repo
+
+# In Colab Cell 2:
+from google.colab import drive
+drive.mount('/content/drive')
+
+# In Colab Cell 3:
+python colab_setup.py
+
+# In Colab Cell 4:
+python 04_train_model.py  # or 04_train_model_optimized.py for FP16
+```
+
+**Voordelen Colab:**
+- A100 GPU: ~10x sneller dan GTX 1080
+- Epoch 1: 5+ dagen (lokaal) → 6-8 uur (Colab)
+- Mixed precision (FP16) beschikbaar
+- Automatic checkpointing naar Drive
 
 ## GPU Optimization
 
