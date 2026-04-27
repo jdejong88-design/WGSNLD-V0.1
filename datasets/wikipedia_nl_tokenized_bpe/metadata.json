@@ -1,0 +1,8 @@
+{
+  "tokenizer": "dutch_tokenizer.json",
+  "vocab_size": 16000,
+  "max_token_id": 15999,
+  "total_tokens": 68483294,
+  "num_batches": 1278,
+  "source": "wikipedia_nl_sample_processed"
+}

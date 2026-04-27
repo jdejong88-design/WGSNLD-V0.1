@@ -1,28 +1,16 @@
-# Data en checkpoints (veel te groot voor GitHub)
-datasets/
+# Data en Tokens (TE GROOT VOOR GITHUB)
+tokens/
+*.zip
+*.tar.gz
+*.arrow
+
+# Model Checkpoints
 checkpoints/
 *.pt
 *.pth
 
-# Logs en logs
+# Logs en rotzooi
 *.log
-training_history*.json
-temp_monitor.log
-
-# Python
+stats.json
 __pycache__/
-*.pyc
-*.pyo
-*.egg-info/
-.venv/
-venv/
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# OS
-.DS_Store
-Thumbs.db
+.ipynb_checkpoints/

@@ -1,0 +1,78 @@
+{
+  "builder_name": "parquet",
+  "citation": "",
+  "config_name": "20231101.nl",
+  "dataset_name": "wikipedia",
+  "dataset_size": 2646316266,
+  "description": "",
+  "download_checksums": {
+    "hf://datasets/wikimedia/wikipedia@b04c8d1ceb2f5cd4588862100d08de323dccfbaa/20231101.nl/train-00000-of-00006.parquet": {
+      "num_bytes": 505543305,
+      "checksum": null
+    },
+    "hf://datasets/wikimedia/wikipedia@b04c8d1ceb2f5cd4588862100d08de323dccfbaa/20231101.nl/train-00001-of-00006.parquet": {
+      "num_bytes": 304174779,
+      "checksum": null
+    },
+    "hf://datasets/wikimedia/wikipedia@b04c8d1ceb2f5cd4588862100d08de323dccfbaa/20231101.nl/train-00002-of-00006.parquet": {
+      "num_bytes": 95652553,
+      "checksum": null
+    },
+    "hf://datasets/wikimedia/wikipedia@b04c8d1ceb2f5cd4588862100d08de323dccfbaa/20231101.nl/train-00003-of-00006.parquet": {
+      "num_bytes": 57848145,
+      "checksum": null
+    },
+    "hf://datasets/wikimedia/wikipedia@b04c8d1ceb2f5cd4588862100d08de323dccfbaa/20231101.nl/train-00004-of-00006.parquet": {
+      "num_bytes": 109213233,
+      "checksum": null
+    },
+    "hf://datasets/wikimedia/wikipedia@b04c8d1ceb2f5cd4588862100d08de323dccfbaa/20231101.nl/train-00005-of-00006.parquet": {
+      "num_bytes": 364411417,
+      "checksum": null
+    }
+  },
+  "download_size": 1436843432,
+  "features": {
+    "id": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "url": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "title": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "text": {
+      "dtype": "string",
+      "_type": "Value"
+    }
+  },
+  "homepage": "",
+  "license": "",
+  "size_in_bytes": 4083159698,
+  "splits": {
+    "train": {
+      "name": "train",
+      "num_bytes": 2646316266,
+      "num_examples": 2135977,
+      "shard_lengths": [
+        132000,
+        304997,
+        440996,
+        885992,
+        294996,
+        76996
+      ],
+      "dataset_name": "wikipedia"
+    }
+  },
+  "version": {
+    "version_str": "0.0.0",
+    "major": 0,
+    "minor": 0,
+    "patch": 0
+  }
+}
